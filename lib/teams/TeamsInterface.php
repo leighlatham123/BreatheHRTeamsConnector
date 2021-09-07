@@ -9,4 +9,10 @@ interface TeamsInterface
      * @return array
      */
     public function sendAbsences(array $payload);
+
+    /**
+     * @param array
+     * @return array
+     */
+    public function sendUpcomingAbsences(array $payload);
 }

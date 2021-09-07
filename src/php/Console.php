@@ -22,9 +22,16 @@ class Console {
 
     public function init()
     {
-        $absences_list = self::$breath->getAbsences();
+        $absences_today = self::$breath->getAbsences();
 
-        self::$teams->sendAbsences($absences_list); 
+        self::$teams->sendAbsences($absences_today); 
+
+        $absences_upcoming = self::$breath->getAbsences(
+            date('Y-m-d', strtotime('tomorrow')), 
+            date('Y-m-d', strtotime('+7 day'))
+        );
+
+        self::$teams->sendUpcomingAbsences($absences_upcoming); 
 
         return (1);
     }

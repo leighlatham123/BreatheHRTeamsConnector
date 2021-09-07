@@ -24,4 +24,14 @@ class Teams implements TeamsInterface
 
         return $connectors->sendAbsencesPayload($payload);
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function sendUpcomingAbsences($payload)
+    {
+        $connectors = new Connectors;
+
+        return $connectors->sendUpcomingAbsencesPayload($payload);
+    }
 }

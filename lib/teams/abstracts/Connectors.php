@@ -4,6 +4,7 @@ namespace lib\teams\abstracts;
 
 use lib\teams\Teams;
 use lib\teams\abstracts\Absences;
+use lib\teams\abstracts\UpcomingAbsences;
 
 class Connectors extends Teams
 {
@@ -19,6 +20,13 @@ class Connectors extends Teams
     public function sendAbsencesPayload($json_payload)
     {
         $absences = new Absences;
+
+        return $absences->send($json_payload);
+    }
+
+    public function sendUpcomingAbsencesPayload($json_payload)
+    {
+        $absences = new UpcomingAbsences;
 
         return $absences->send($json_payload);
     }
