@@ -1,30 +1,154 @@
 <?php
+/**
+ * Php version > 5.6
+ *  
+ * @category Php
+ * @package  Null
+ * @author   Leigh Latham <leighlatham123@gmail.com>
+ * @license  https://www.php.net/license/3_01.txt The PHP License, version 3.01
+ * @version  GIT: 1.0
+ * @link     false
+ * Description
+ */
+
+declare(strict_types=1);
 
 namespace lib\traits;
 
-trait BreatheTrait {
+use lib\breathe\Breathe;
 
-    private function filterAbsences($absences_json)
+/**
+ * The breathe trait in use by breathe class
+ * 
+ * @category The_Breathe_Trait_In_Use_By_Breathe_Class
+ * @package  False
+ * @author   Leigh Latham <leighlatham123@gmail.com>
+ * @license  https://www.php.net/license/3_01.txt The PHP License, version 3.01
+ * @link     false
+ */
+trait BreatheTrait
+{
+    /**
+     * Undocumented function
+     *
+     * @param string $events_json      list JSON string
+     * @param string $event_unique_key unique identifier for events list
+     * 
+     * @return void
+     */
+    private function _filterEvents($events_json, $event_unique_key)
     {
-        $absences_array = $this->decodeAbsences($absences_json);
+        $events_array = $this->_decodeJSONString($events_json);
 
-        return array_map(array($this, 'matchValues'), $absences_array['absences']);
+        return empty($events_array[$event_unique_key]) ? [] : array_map(
+            array($this, '_matchValues'), $events_array[$event_unique_key]
+        );
     }
 
-    private function decodeAbsences($absences_json)
+    /**
+     * Undocumented function
+     *
+     * @param string $employee_json       list JSON string
+     * @param string $employee_unique_key unique identifier for events list
+     * 
+     * @return void
+     */
+    private function _filterSicknesses($employee_json, $employee_unique_key)
     {
-        return json_decode($absences_json, true);
+        $employee_array = $this->_decodeJSONString($employee_json);
+
+        return empty($employee_array[$employee_unique_key]) ? [] : array_map(
+            array($this, '_matchSicknessValues'), $employee_array[$employee_unique_key]
+        );
     }
 
-    private function matchValues($array)
+    /**
+     * Undocumented function
+     *
+     * @param string $employee_json       list JSON string
+     * @param string $employee_unique_key unique identifier for events list
+     * 
+     * @return void
+     */
+    private function _filterEmployees($employee_json, $employee_unique_key)
     {
-        foreach ($array as $value)
-        {
-            return $array['employee']['first_name'] . " " . $array['employee']['last_name']
+        $employee_array = $this->_decodeJSONString($employee_json);
+
+        return empty($employee_array[$employee_unique_key]) ? [] : array_map(
+            array($this, '_matchEmployeeValues'), $employee_array[$employee_unique_key]
+        );
+    }
+
+    /**
+     * Convert JSON list to array
+     *
+     * @param string $events_json list JSON string
+     * 
+     * @return array
+     */
+    private function _decodeJSONString($events_json)
+    {
+        return json_decode($events_json, true);
+    }
+
+    /**
+     * Filter through array of event values and return only ones which are required
+     *
+     * @param array $array An array of values
+     * 
+     * @return array
+     */
+    private function _matchValues($array)
+    {
+        foreach ($array as $value) {
+            return $array['employee']['first_name'] . " " 
+            . $array['employee']['last_name']
             . " - " . $array['type']
             . ": " . date('d/m/Y', strtotime($array['start_date']))
             . " - " . date('d/m/Y', strtotime($array['end_date']))
             . "<br>";
         }
+    }
+
+    /**
+     * Filter through array of event values and return only ones which are required
+     *
+     * @param array $array An array of values
+     * 
+     * @return array
+     */
+    private function _matchSicknessValues($array)
+    {
+        $breahe = new Breathe;
+
+        foreach ($array as $value) {
+            return $this->getEmployeeNameFromId($array['employee']['id'])
+            . " - " . "Sickness"
+            . ": " . date('d/m/Y', strtotime($array['start_date']))
+            . " - " . date('d/m/Y', strtotime($array['end_date']))
+            . "<br>";
+        }
+    }
+
+    /**
+     * Filter through array of emplpyee values and return only ones which are required
+     *
+     * @param array $array An array of values
+     * 
+     * @return array
+     */
+    private function _matchEmployeeValues($array)
+    {
+        foreach ($array as $value) {
+            return $array['first_name'] . " " 
+            . $array['last_name'];
+        }
+    }
+
+    private function getEmployeeNameFromId($id)
+    {
+        $breathe = new Breathe;
+
+        return implode(",", $breathe->getEmployee($id));
     }
 }

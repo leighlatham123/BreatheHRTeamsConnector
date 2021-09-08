@@ -20,15 +20,15 @@ use lib\breathe\Breathe;
 use lib\traits\CurlTrait;
 
 /**
- * The main class for querying Breathe HR emplopyees
+ * The main class for querying Breathe HR sicknesses
  * 
- * @category The_Main_Class_For_Querying_Breathe_HR_Emplopyees
+ * @category The_Main_Class_For_Querying_Breathe_HR_Sicknesses
  * @package  False
  * @author   Leigh Latham <leighlatham123@gmail.com>
  * @license  https://www.php.net/license/3_01.txt The PHP License, version 3.01
  * @link     false
  */
-class Employees extends Breathe
+class Sicknesses extends Breathe
 {
     use CurlTrait;
 
@@ -36,12 +36,11 @@ class Employees extends Breathe
     private $_host;
     private $_uri;
     private $_url;
-    private $_employee;
-    private $_employees;
+    private $_sicknesses;
     private static $_curl;
 
     /**
-     * Employees class constructor
+     * Sicknesses class consutrctor
      */
     public function __construct()
     {
@@ -50,45 +49,27 @@ class Employees extends Breathe
         self::$_curl = new Curl;
         $this->_key = parent::getKey();
         $this->_host = parent::getHost();
-        $this->_uri = "employees";
+        $this->_uri = "sicknesses";
         $this->_url = $this->_host.$this->_uri;
     }
 
     /**
-     * Undocumented function
+     * Creates the request to retrieve sicknesses values
      *
-     * @return void
-     */
-    protected function get()
-    {
-        self::$_curl->init();
-
-        $curl_options = $this->_createCustomOptionsArray("GET", $this->_url, $this->_key);
-
-        self::$_curl->setOptArray($curl_options);
-
-        $this->_employees = self::$_curl->exec();
-
-        return $this->_employees;
-    }
-
-    /**
-     * Undocumented function
+     * @param array $body An array of request body values
      * 
-     * @param int $employee_id Employee ID of employee
-     *
      * @return array
      */
-    protected function getById($employee_id)
+    protected function get($body)
     {
         self::$_curl->init();
 
-        $curl_options = $this->_createCustomOptionsArray("GET", $this->_url."/$employee_id", $this->_key);
+        $curl_options = $this->_createCustomOptionsArray("GET", $this->_url, $this->_key, $body);
 
         self::$_curl->setOptArray($curl_options);
 
-        $this->_employee = self::$_curl->exec();
+        $this->_sicknesses = self::$_curl->exec();
 
-        return $this->_employee;
+        return $this->_sicknesses;
     }
 }

@@ -1,4 +1,17 @@
 <?php
+/**
+ * Php version > 5.6
+ *  
+ * @category Php
+ * @package  Null
+ * @author   Leigh Latham <leighlatham123@gmail.com>
+ * @license  https://www.php.net/license/3_01.txt The PHP License, version 3.01
+ * @version  GIT: 1.0
+ * @link     false
+ * Description
+ */
+
+declare(strict_types=1);
 
 namespace lib\teams\abstracts;
 
@@ -6,113 +19,90 @@ use lib\curl\Curl;
 use lib\traits\CurlTrait;
 use lib\teams\abstracts\Connectors;
 
+/**
+ * The class for integrating Microsoft Teams upcoming absences
+ * 
+ * @category The_Final_Class_For_Integrating_Microsoft_Teams
+ * @package  False
+ * @author   Leigh Latham <leighlatham123@gmail.com>
+ * @license  https://www.php.net/license/3_01.txt The PHP License, version 3.01
+ * @link     false
+ */
 class UpcomingAbsences extends Connectors
 {
     use CurlTrait;
 
-    private $webhook;
-    private $absences;
-    private static $curl;
+    private $_webhook;
+    private $_absences;
+    private static $_curl;
 
+    /**
+     * UpcomingAbsences abstracts class constructor
+     */
     public function __construct()
     {
         parent::__construct();
 
-        self::$curl = new Curl;
-        $this->webhook = parent::getAbsencesHook();
+        self::$_curl = new Curl;
+        $this->_webhook = parent::getAbsencesHook();
     }
 
+    /**
+     * Creates the upcoming absences post request
+     *
+     * @param array $payload An array of data to post
+     * 
+     * @return response
+     */
     protected function send($payload)
     {
-        self::$curl->init();
+        self::$_curl->init();
 
-        $payload = $this->createFormattedPayload($payload);
+        $payload = $this->_createFormattedPayload($payload);
 
-        $curl_options = $this->createOptionsArray($payload);
+        $curl_options = $this->_createOptionsArray("POST", $this->_webhook, $payload);
 
-        self::$curl->setOptArray($curl_options);
+        self::$_curl->setOptArray($curl_options);
 
-        $this->response = self::$curl->exec();
+        $this->response = self::$_curl->exec();
 
         return $this->response;
     }
 
-    private function createFormattedPayload($payload_array)
+    /**
+     * Creates the formatting of the payload array
+     *
+     * @param array $payload_array An array of data to post
+     * 
+     * @return string
+     */
+    private function _createFormattedPayload($payload_array)
     {
-        $count = $this->getAbsencesCount($payload_array);
-        $message = $this->getAbsencesMessage($count);
+        $count = count($payload_array);
+        $message = $count === 1 ? "is" : "are";
         
-        return $this->formatPayload($payload_array, $message, $count);
-    }
-
-    private function getAbsencesCount(array $absences)
-    {
-        return count($absences);
+        return $this->_formatPayload($payload_array, $message, $count);
     }
 
     /**
-     * @param int $absences_count
-     * @return string
+     * Formats the payload ready for posting to teams webhook
+     *
+     * @param array  $absences_array   An array of absences data
+     * @param string $absences_message Absences message
+     * @param int    $absences_count   Absences count
+     * 
+     * @return void
      */
-    private function getAbsencesMessage(int $absences_count)
+    private function _formatPayload($absences_array, $absences_message, $absences_count)
     {
-        return $absences_count === 1 ? "is" : "are";
-    }
-
-    private function formatPayload($absences_array, $absences_message, $absences_count)
-    {
-        array_unshift($absences_array, "**There $absences_message $absences_count upcoming absence(s) in the next 7 days.** <br>");
+        array_unshift(
+            $absences_array, "**There $absences_message $absences_count upcoming absence(s) in the next 7 days.** <br>"
+        );
 
         $absences_list = implode(',', array_values($absences_array));
         $absences_list = json_encode(array("text" => $absences_list), JSON_UNESCAPED_SLASHES);
         $absences_list = preg_replace('~[,|]~', '', $absences_list);
 
         return $absences_list;
-    }
-
-    private function createOptionsArray($body)
-    {
-        return $this->createCurlOptions($this->setOptionKeys(), $this->setOptionValues($body));
-    }
-
-    private function createHeaderArray()
-    {
-        return $this->createCurlHeaders($this->setHeaderKeys(), $this->setHeaderValues());
-    }
-
-    private function setHeaderKeys()
-    {
-        return array(
-            "Accept",
-            "Content-Type",
-        );
-    }
-
-    private function setHeaderValues()
-    {
-        return array(
-            "application/json",
-            "application/json",
-        );
-    }
-
-    private function setOptionKeys()
-    {
-        return array(
-            CURLOPT_CUSTOMREQUEST,
-            CURLOPT_URL,
-            CURLOPT_HTTPHEADER,
-            CURLOPT_POSTFIELDS,
-        );
-    }
-
-    private function setOptionValues($body)
-    {
-        return array(
-            "POST",
-            $this->webhook,
-            $this->createHeaderArray(),
-            $body,
-        );
     }
 }

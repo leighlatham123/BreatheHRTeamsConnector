@@ -1,136 +1,216 @@
-<?php declare(strict_types=1);
+<?php
+/**
+ * Php version > 5.6
+ *  
+ * @category Php
+ * @package  Null
+ * @author   Leigh Latham <leighlatham123@gmail.com>
+ * @license  https://www.php.net/license/3_01.txt The PHP License, version 3.01
+ * @version  GIT: 1.0
+ * @link     false
+ * Description
+ */
+
+declare(strict_types=1);
 
 namespace lib\curl;
 
+/**
+ * The final class for cURL instantiation
+ * 
+ * @category The_Final_Class_For_CURL_Instantiation
+ * @package  False
+ * @author   Leigh Latham <leighlatham123@gmail.com>
+ * @license  https://www.php.net/license/3_01.txt The PHP License, version 3.01
+ * @link     false
+ */
 class Curl implements CurlInterface
 {
     /**
+     * Curl handle instance
+     * 
      * @var \CurlHandle
      */
-    private $handle;
+    private $_handle;
 
     /**
-     * @inheritdoc
+     * Initialize a cURL session
+     * 
+     * @param string|null $url URL to be initialised if provided
+     * 
+     * @return void
      */
     public function init(string $url = null)
     {
-        $this->handle = curl_init();
+        $this->_handle = curl_init();
     }
 
     /**
-     * @inheritdoc
+     * Return the last error number
+     * 
+     * @return int
      */
-    public function errno(): int
+    public function errno()
     {
-        return curl_errno($this->handle);
+        return curl_errno($this->_handle);
     }
 
     /**
-     * @inheritdoc
+     * Return a string containing the last error for the current session
+     * 
+     * @return string
      */
-    public function error(): string
+    public function error()
     {
-        return curl_error($this->handle);
+        return curl_error($this->_handle);
     }
 
     /**
-     * @inheritdoc
+     * Perform a cURL session
+     * 
+     * @return response
      */
     public function exec()
     {
-        return curl_exec($this->handle);
+        return curl_exec($this->_handle);
     }
 
     /**
-     * @inheritdoc
+     * Get information regarding a specific transfer
+     * 
+     * @param int|null $opt cURL information option id if provided
+     * 
+     * @return string
      */
     public function getInfo(int $opt = 0)
     {
         if (func_num_args() > 0) {
-            return curl_getinfo($this->handle, $opt);
+            return curl_getinfo($this->_handle, $opt);
         }
-        return curl_getinfo($this->handle);
+
+        return curl_getinfo($this->_handle);
     }
 
     /**
-     * @inheritdoc
+     * Set an option for a cURL transfer
+     * 
+     * @param int   $option Curl option integer
+     * @param mixed $value  Curl option  value
+     * 
+     * @return bool
      */
-    public function setOpt(int $option, $value): bool
+    public function setOpt(int $option, $value)
     {
-        return curl_setopt($this->handle, $option, $value);
+        return curl_setopt($this->_handle, $option, $value);
     }
 
     /**
-     * @inheritdoc
+     * Set multiple options for a cURL transfer
+     * 
+     * @param array $options Curl options array
+     * 
+     * @return bool
      */
-    public function setOptArray(array $options): bool
+    public function setOptArray($options)
     {
-        return curl_setopt_array($this->handle, $options);
+        return curl_setopt_array($this->_handle, $options);
     }
 
     /**
-     * @inheritdoc
+     * Gets cURL version information
+     * 
+     * @param int $age [optional] Removed since version PHP 8.0.
+     * 
+     * @return array|false
      */
-    public function version(int $age = CURLVERSION_NOW): array
+    public function version(int $age = CURLVERSION_NOW)
     {
         return curl_version($age);
     }
 
     /**
-     * @inheritdoc
+     * Return string describing the given error code
+     * 
+     * @param int $errornum One of the cURL error codes} constants.
+     * 
+     * @return string|null
      */
-    public function strError(int $errornum): ?string
+    public function strError(int $errornum)
     {
         return curl_strerror($errornum);
     }
 
     /**
-     * @inheritdoc
+     * URL encodes the given string
+     * 
+     * @param string $string non-URL encoded string
+     * 
+     * @return string
      */
-    public function escape(string $str)
+    public function escape($string)
     {
-        return curl_escape($this->handle, $str);
+        return curl_escape($this->_handle, $string);
     }
 
     /**
-     * @inheritdoc
+     * Decodes the given URL encoded string
+     * 
+     * @param string $string URL encoded string
+     * 
+     * @return string
      */
-    public function unescape(string $str)
+    public function unescape($string)
     {
-        return curl_unescape($this->handle, $str);
+        return curl_unescape($this->_handle, $string);
     }
 
     /**
-     * @inheritdoc
+     * Reset all options of a libcurl session handle
+     * 
+     * @return void
      */
     public function reset()
     {
-        curl_reset($this->handle);
+        curl_reset($this->_handle);
     }
 
     /**
-     * @inheritdoc
+     * Pause and unpause a connection
+     * 
+     * @param int $bitmask One of CURLPAUSE_* constants.
+     * 
+     * @return int Returns an error code (CURLE_OK for no error).
      */
-    public function pause(int $bitmask): int
+    public function pause(int $bitmask)
     {
-        return curl_pause($this->handle, $bitmask);
+        return curl_pause($this->_handle, $bitmask);
     }
 
     /**
-     * @inheritdoc
+     * Retrieves the current cURL handle instance
+     * 
+     * @return Curl
      */
     public function getHandle()
     {
-        return $this->handle;
+        return $this->_handle;
     }
 
+    /**
+     * The Curl class destructor - Close a cURL session
+     */
     public function __destruct()
     {
-        curl_close($this->handle);
+        curl_close($this->_handle);
     }
 
+    /**
+     * Clones the current cURL handle along with all of its preferences
+     *
+     * @return void
+     */
     public function __clone()
     {
-        $this->handle = curl_copy_handle($this->handle);
+        $this->_handle = curl_copy_handle($this->_handle);
     }
 }

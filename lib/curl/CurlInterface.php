@@ -1,107 +1,164 @@
-<?php declare(strict_types=1);
+<?php
+/**
+ * Php version > 5.6
+ *  
+ * @category Php
+ * @package  Null
+ * @author   Leigh Latham <leighlatham123@gmail.com>
+ * @license  https://www.php.net/license/3_01.txt The PHP License, version 3.01
+ * @version  GIT: 1.0
+ * @link     false
+ * Description
+ */
+
+declare(strict_types=1);
 
 namespace lib\curl;
 
+/**
+ * The curl class interface for cURL instantiation
+ * 
+ * @category The_Curl_Class_Interface_For_CURL_Instantiation
+ * @package  False
+ * @author   Leigh Latham <leighlatham123@gmail.com>
+ * @license  https://www.php.net/license/3_01.txt The PHP License, version 3.01
+ * @link     false
+ */
 interface CurlInterface
 {
     /**
-     * @see curl_init()
+     * Initialize a cURL session
      *
-     * @param string $url URL
+     * @param string $url The URL
+     * 
      * @return void
+     * 
+     * @see curl_init()
      */
     public function init(string $url = null);
 
     /**
-     * @see curl_errno()
+     * Return the last error number
      *
      * @return int
+     * 
+     * @see curl_errno()
      */
     public function errno();
 
     /**
-     * @see curl_error()
+     * Return a string containing the last error for the current session
      *
      * @return string
+     * 
+     * @see curl_error()
      */
     public function error();
 
     /**
-     * @see curl_exec()
+     * Perform a cURL session
      *
      * @return boolean|string
+     * 
+     * @see curl_exec()
      */
     public function exec();
 
     /**
-     * @see curl_getinfo()
+     * Get information regarding a specific transfer
      *
      * @param int $opt CURLINFO_*
+     * 
      * @return array|string
+     * 
+     * @see curl_getinfo()
      */
     public function getInfo(int $opt = 0);
 
     /**
-     * @see curl_setopt()
+     * Set an option for a cURL transfer
      *
-     * @param int $option Option code
-     * @param mixed $value Option value
+     * @param int   $option Option code
+     * @param mixed $value  Option value
+     * 
      * @return boolean
+     * 
+     * @see curl_setopt()
      */
     public function setOpt(int $option, $value);
 
     /**
-     * @see curl_setopt_array()
+     * Set multiple options for a cURL transfer
      *
      * @param array $options Options
+     * 
      * @return boolean
+     * 
+     * @see curl_setopt_array()
      */
     public function setOptArray(array $options);
 
     /**
-     * @see curl_version()
+     * Gets cURL version information
      *
-     * @param int $age
+     * @param int $age [optional] Removed since version PHP 8.0.
+     * 
      * @return array
+     * 
+     * @see curl_version()
      */
     public function version(int $age = CURLVERSION_NOW);
 
     /**
-     * @see curl_strerror()
+     * Return string describing the given error code
      *
-     * @param int $errornum
+     * @param int $errornum One of the cURL error codes} constants.
+     * 
      * @return string
+     * 
+     * @see curl_strerror()
      */
     public function strError(int $errornum);
 
     /**
-     * @see curl_escape()
+     * URL encodes the given string
      *
-     * @param string $str
+     * @param string $str non-URL encoded string
+     * 
      * @return string|false
+     * 
+     * @see curl_escape()
      */
     public function escape(string $str);
 
     /**
-     * @see curl_unescape()
+     * Decodes the given URL encoded string
      *
-     * @param string $str
+     * @param string $str URL encoded string
+     * 
      * @return string|false
+     * 
+     * @see curl_unescape()
      */
     public function unescape(string $str);
 
     /**
-     * @see curl_reset()
+     * Reset all options of a libcurl session handle
      *
      * @return void
+     * 
+     * @see curl_reset()
      */
     public function reset();
 
     /**
-     * @see curl_pause()
+     * Pause and unpause a connection
      *
-     * @param int $bitmask
+     * @param int $bitmask $bitmask One of CURLPAUSE_* constants.
+     * 
      * @return int
+     * 
+     * @see curl_pause()
      */
     public function pause(int $bitmask);
 
