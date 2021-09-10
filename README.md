@@ -1,10 +1,47 @@
 # Vanilla PHP Breathe HR Teams Connector
 A PHP integration between Breathe HR and Microsoft Teams.
 
+#### OOP PHP
+#### PSR-12 standard
+#### Supports PHP 5.6+
+ 
+## Objective
 The objective of this project is to create a script/library that can be run without any third party packages or tools (besides PHP) for connectvity between Breathe HR API and a Microsoft Teams solution.
+The aim is to integrate the absence events for employees whether that is sicknesses, holidays or other and send them to a Microsoft teams channel. Though this could just as easily be reconfigured by a developer to point to Slack or any other chat client with an API that accepts markdown messages.
 
-Simply add your deployments API keys and Webhooks to the environment file and run the command on a schedule such as a cron job or manually.
+### Installation
+Simply add your deployments API keys and Webhooks to the environment file and run any of the commands provided below on a schedule such as a cron job or manually.
+
+### Environment Setup
 
 ```
+# Microsoft Teams channel
+TEAMS_ABSENCES_WEBHOOK={ Your Microsoft Teams connector webhook }
+
+# Breathe HR
+BREATHE_API_KEY={ Your Breathe HR API Key }
+BREATHE_API_HOST={ Your Breathe HR API URL }
+```
+
+### Supported Commands
+
+#### Retrieve all events (all absences API values, all sicknesses API values)
+```
 php {../PATH_TO_PROJECT}/src/php/Console.php events
+```
+#### Retrieve all holiday events (all absences API values)
+```
+php {../PATH_TO_PROJECT}/src/php/Console.php holidays
+```
+#### Retrieve all sicknesses events (all sicknesses API values)
+```
+php {../PATH_TO_PROJECT}/src/php/Console.php sicknesses
+```
+#### Retrieve all employees (all employees API values)
+```
+php {../PATH_TO_PROJECT}/src/php/Console.php employees
+```
+#### Retrieve employee by id (employee API value)
+```
+php {../PATH_TO_PROJECT}/src/php/Console.php employee -i {EMPLOYEE_ID}
 ```
