@@ -64,3 +64,5 @@ Once you are satisfied with your required commands list and have set up the envi
 
 ### Todo
 - Add remaining API calls to the library
+- Add tests
+- Add documentation
