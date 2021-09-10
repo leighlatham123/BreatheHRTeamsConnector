@@ -45,3 +45,10 @@ php {../PATH_TO_PROJECT}/src/php/Console.php employees
 ```
 php {../PATH_TO_PROJECT}/src/php/Console.php employee -i {EMPLOYEE_ID}
 ```
+
+### Scheduling
+
+Once you are satisfied with your required commands list and have set up the environment file, just add the command to a scheduling assisting service such as a cron job.
+```
+0 0 * * * {../path/to/php} {../PATH_TO_PROJECT}/src/php/Console.php events 2>&1
+```
