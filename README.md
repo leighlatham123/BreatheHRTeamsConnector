@@ -26,22 +26,22 @@ BREATHE_API_HOST={ Your Breathe HR API URL }
 ### Supported Commands
 
 #### Retrieve all events (all absences API values, all sicknesses API values)
-Optional flags {-s} and {-e} to specify date string format {YYYY-MM-DD}
+*Optional flags {-s} and {-e} to specify date string format {YYYY-MM-DD}*
 ```
 php {../PATH_TO_PROJECT}/src/php/Console.php events
 ```
 #### Retrieve all events (all upcoming absences API values)
-Optional flags {-t} and {-f} to specify date string format {YYYY-MM-DD}
+*Optional flags {-t} and {-f} to specify date string format {YYYY-MM-DD}*
 ```
 php {../PATH_TO_PROJECT}/src/php/Console.php upcoming
 ```
 #### Retrieve all holiday events (all absences API values)
-Optional flags {-s} and {-e} to specify date string format {YYYY-MM-DD}
+*Optional flags {-s} and {-e} to specify date string format {YYYY-MM-DD}*
 ```
 php {../PATH_TO_PROJECT}/src/php/Console.php holidays
 ```
 #### Retrieve all sicknesses events (all sicknesses API values)
-Optional flags {-s} and {-e} to specify date string format {YYYY-MM-DD}
+*Optional flags {-s} and {-e} to specify date string format {YYYY-MM-DD}*
 ```
 php {../PATH_TO_PROJECT}/src/php/Console.php sicknesses
 ```
@@ -50,7 +50,7 @@ php {../PATH_TO_PROJECT}/src/php/Console.php sicknesses
 php {../PATH_TO_PROJECT}/src/php/Console.php employees
 ```
 #### Retrieve employee by id (employee API value)
-Required flag {-i} to specify a valid Employee ID.
+*Required flag {-i} to specify a valid Employee ID.*
 ```
 php {../PATH_TO_PROJECT}/src/php/Console.php employee -i {EMPLOYEE_ID}
 ```
