@@ -61,3 +61,6 @@ Once you are satisfied with your required commands list and have set up the envi
 ```
 0 0 * * * {../path/to/php} {../PATH_TO_PROJECT}/src/php/Console.php events 2>&1
 ```
+
+### Todo
+- Add remaining API calls to the library
