@@ -36,12 +36,12 @@ interface BreatheInterface
     /**
      * Retrieves an array of 'absences' event values from the API
      *
-     * @param string|null $start_date The start date from which to query from
-     * @param string|null $end_date   The end date from which to query before
+     * @param string $start_date The start date from which to query from
+     * @param string $end_date   The end date from which to query before
      * 
      * @return array
      */
-    public function getAbsences(string $start_date = null, string $end_date = null);
+    public function getAbsences(string $start_date, string $end_date);
 
     /**
      * Retrieves the API host string value publicly

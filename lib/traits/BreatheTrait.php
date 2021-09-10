@@ -100,14 +100,12 @@ trait BreatheTrait
      */
     private function _matchValues($array)
     {
-        foreach ($array as $value) {
-            return $array['employee']['first_name'] . " " 
-            . $array['employee']['last_name']
-            . " - " . $array['type']
-            . ": " . date('d/m/Y', strtotime($array['start_date']))
-            . " - " . date('d/m/Y', strtotime($array['end_date']))
-            . "<br>";
-        }
+        return $array['employee']['first_name'] . " " 
+        . $array['employee']['last_name']
+        . " - " . $array['type']
+        . ": " . date('d/m/Y', strtotime($array['start_date']))
+        . " - " . date('d/m/Y', strtotime($array['end_date']))
+        . "<br>";
     }
 
     /**
@@ -119,19 +117,15 @@ trait BreatheTrait
      */
     private function _matchSicknessValues($array)
     {
-        $breahe = new Breathe;
-
-        foreach ($array as $value) {
-            return $this->getEmployeeNameFromId($array['employee']['id'])
-            . " - " . "Sickness"
-            . ": " . date('d/m/Y', strtotime($array['start_date']))
-            . " - " . date('d/m/Y', strtotime($array['end_date']))
-            . "<br>";
-        }
+        return $this->_getEmployeeNameFromId($array['employee']['id'])
+        . " - " . "Sickness"
+        . ": " . date('d/m/Y', strtotime($array['start_date']))
+        . " - " . date('d/m/Y', strtotime($array['end_date']))
+        . "<br>";
     }
 
     /**
-     * Filter through array of emplpyee values and return only ones which are required
+     * Filter through array of employee values and return required
      *
      * @param array $array An array of values
      * 
@@ -139,13 +133,18 @@ trait BreatheTrait
      */
     private function _matchEmployeeValues($array)
     {
-        foreach ($array as $value) {
-            return $array['first_name'] . " " 
-            . $array['last_name'];
-        }
+        return $array['first_name'] . " " 
+        . $array['last_name'];
     }
 
-    private function getEmployeeNameFromId($id)
+    /**
+     * Retrieve an Employee name string via a given employee ID
+     *
+     * @param int $id Employee ID
+     * 
+     * @return string
+     */
+    private function _getEmployeeNameFromId($id)
     {
         $breathe = new Breathe;
 

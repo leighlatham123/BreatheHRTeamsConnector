@@ -65,7 +65,7 @@ class Breathe implements BreatheInterface
      * 
      * @return array
      */
-    public function getSicknesses($start_date = null, $end_date = null)
+    public function getSicknesses($start_date, $end_date)
     {
         $sicknesses = new Sicknesses;
         
@@ -105,12 +105,12 @@ class Breathe implements BreatheInterface
     /**
      * Retrieves an array of 'absences' event values from the API
      *
-     * @param string|null $start_date The start date from which to query from
-     * @param string|null $end_date   The end date from which to query before
+     * @param string $start_date The start date from which to query from
+     * @param string $end_date   The end date from which to query before
      * 
      * @return array
      */
-    public function getAbsences($start_date = null, $end_date = null)
+    public function getAbsences($start_date, $end_date)
     {
         $absences = new Absences;
 
@@ -150,9 +150,6 @@ class Breathe implements BreatheInterface
      */
     private function _setBodyArray($start_date, $end_date)
     {
-        $start_date = $start_date ?: date('Y-m-d');
-        $end_date = $end_date ?: date('Y-m-d');
-
         return array(
             'start_date' => $start_date, 
             'end_date' => $end_date
