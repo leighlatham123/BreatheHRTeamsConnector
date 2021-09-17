@@ -45,29 +45,29 @@ class Connectors extends Teams
     /**
      * Initiates the absences request
      *
-     * @param string $json_payload List of JSON objects to send
+     * @param array $payload List of JSON objects to send
      * 
      * @return response
      */
-    public function sendAbsencesPayload($json_payload)
+    public function sendAbsencesPayload($payload)
     {
         $absences = new Absences;
 
-        return $absences->send($json_payload);
+        return $absences->send($payload);
     }
 
     /**
      * Initiates the upcoming absences request
      *
-     * @param string $json_payload List of JSON objects to send
+     * @param array $payload List of JSON objects to send
      * 
      * @return response
      */
-    public function sendUpcomingAbsencesPayload($json_payload)
+    public function sendUpcomingAbsencesPayload($payload)
     {
         $absences = new UpcomingAbsences;
 
-        return $absences->send($json_payload);
+        return $absences->send($payload);
     }
 
     /**
