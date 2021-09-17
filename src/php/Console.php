@@ -149,7 +149,6 @@ class Console
     }
 }
 
-
 /**
  * PSR-0: Class Autoloading
  */

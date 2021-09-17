@@ -100,12 +100,14 @@ trait BreatheTrait
      */
     private function _matchValues($array)
     {
-        return $array['employee']['first_name'] . " " 
-        . $array['employee']['last_name']
-        . " - " . $array['type']
-        . ": " . date('d/m/Y', strtotime($array['start_date']))
-        . " - " . date('d/m/Y', strtotime($array['end_date']))
-        . "<br>";
+        if ($array['cancelled'] !== true) {
+            return $array['employee']['first_name'] . " " 
+            . $array['employee']['last_name']
+            . " - " . $array['type']
+            . ": " . date('d/m/Y', strtotime($array['start_date']))
+            . " - " . date('d/m/Y', strtotime($array['end_date']))
+            . "<br>";
+        }  
     }
 
     /**
